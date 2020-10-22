@@ -1,5 +1,5 @@
 {
-  "name": "Twitch Channel Points Auto-Claimer",
+  "name": "Twitch Channel Points Auto-Clicker",
   "version": "1.0",
   "description": "Automatically claims channel watch rewards",
   "permissions": ["activeTab", "declarativeContent", "storage"],

@@ -1,5 +1,4 @@
-console.log("loaded twitch autoclicker");
-
+console.log("Loaded Twitch Channel Points Auto-Clicker");
 
 function clickClaimButton() {
     document.getElementsByClassName("claimable-bonus__icon")[0].click();
@@ -10,10 +9,8 @@ function isRewardClaimable() {
 }
 
 function claimChannelPoints() {
-    console.log("attempting to claim channel points");
     if (isRewardClaimable()) {
         clickClaimButton();
-        console.log("channel points claimed!");
     }
 }
 
