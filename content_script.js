@@ -17,7 +17,9 @@ function runObserver() {
     const target = document.querySelector(".community-points-summary > div > .tw-transition");    
     const config = { attributes: true, childList: true, subtree: true };
     let observer = loadObserver();
-    observer.observe(target, config);
+    console.log(typeof target, target);
+
+    observer.observe(target, config); //TODO: prevent running on home page
 }
 
 
