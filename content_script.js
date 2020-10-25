@@ -1,5 +1,3 @@
-console.log("Loaded Twitch Channel Points Auto-Clicker");
-
 function clickClaimButton() {
     document.getElementsByClassName("claimable-bonus__icon")[0].click();
 }
@@ -11,8 +9,32 @@ function isRewardClaimable() {
 function claimChannelPoints() {
     if (isRewardClaimable()) {
         clickClaimButton();
+        console.log("Reward claimed!");
     }
 }
 
-const minInMillis = 60 * 1000;
-setInterval(claimChannelPoints, minInMillis);
+function runObserver() {
+    const target = document.querySelector(".community-points-summary > div > .tw-transition");    
+    const config = { attributes: true, childList: true, subtree: true };
+    let observer = loadObserver();
+    observer.observe(target, config);
+}
+
+
+function loadObserver() {
+    let observer = new MutationObserver(claimChannelPoints);    
+    return observer;
+}
+
+if (document.readyState !== "complete") {
+    document.addEventListener('readystatechange', event => { 
+        if (event.target.readyState === "complete") {
+            runObserver();
+        }
+    });
+} else {
+    runObserver();
+}
+
+// const minInMillis = 60 * 1000;
+// setInterval(claimChannelPoints, minInMillis);
