@@ -36,5 +36,3 @@ if (document.readyState !== "complete") {
     runObserver();
 }
 
-// const minInMillis = 60 * 1000;
-// setInterval(claimChannelPoints, minInMillis);
