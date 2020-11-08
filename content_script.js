@@ -1,10 +1,10 @@
 const CLAIM_FIELD_SELECTOR = ".community-points-summary > div > .tw-transition";
 const CLAIM_BUTTON_SELECTOR = ".community-points-summary > div > .tw-transition .tw-button"
 
-function runIfValidUrl() {
+function runObserverIfValidUrl() {
     const url = window.location.href;
     if (isValidUrl(url)) {
-        runAfterTargetLoaded(CLAIM_FIELD_SELECTOR, runClaimObserver);
+        runObserverAfterTargetLoaded(CLAIM_FIELD_SELECTOR);
     }
 }
 
@@ -13,19 +13,18 @@ function isValidUrl(url) {
     return re.test(url);
 }
 
-function runAfterTargetLoaded(targetSelector, callback) {
+function runObserverAfterTargetLoaded(targetSelector) {
     let target = document.querySelector(targetSelector);
     if (target === undefined || target == null) {
         let intervalId = setInterval(() => {
             target = document.querySelector(targetSelector);
             if (target != null) {
-                console.log("Target found!");
                 clearInterval(intervalId);
-                callback();
+                runClaimObserver();
             }
         }, 1000);
     } else {
-        callback();
+        runClaimObserver();
     }
 }
 
@@ -36,19 +35,14 @@ function runClaimObserver() {
         return;
     } 
     const config = { attributes: true, childList: true, subtree: true };
-    let observer = loadObserver(claimChannelPoints);
+    let observer = new MutationObserver(claimChannelPoints);
     observer.observe(target, config);
-}
-
-function loadObserver(callback) { // TODO: refactor?
-    let observer = new MutationObserver(callback);    
-    return observer;
 }
 
 function claimChannelPoints() {
     if (isRewardClaimable()) {
         clickClaimButton();
-        console.log("Reward claimed!");
+        console.log("Twitch channel rewards claimed!");
     }
 }
 
@@ -60,17 +54,16 @@ function clickClaimButton() {
     document.querySelector(CLAIM_BUTTON_SELECTOR).click();
 }
 
-function checkURLChanges() {
+function runOnUrlChange() {
     let last_url = "";
     setInterval(() => {
         let current_url = window.location.href;
         if (last_url !== current_url) {
             last_url = current_url;
-            runIfValidUrl();
+            runObserverIfValidUrl();
         }
     }, 1000);
 }
 
 // Driver
-checkURLChanges();
-// runIfValidUrl();
+runOnUrlChange();
