@@ -34,7 +34,7 @@ function runClaimObserver() {
     if (target === undefined || target == null) {
         return;
     } 
-    const config = { attributes: true, childList: true, subtree: true };
+    const config = { attributes: true, childList: true, subtree: false };
     let observer = new MutationObserver(claimChannelPoints);
     observer.observe(target, config);
 }
@@ -42,7 +42,6 @@ function runClaimObserver() {
 function claimChannelPoints() {
     if (isRewardClaimable()) {
         clickClaimButton();
-        console.log("Twitch channel rewards claimed!");
     }
 }
 
@@ -62,7 +61,7 @@ function runOnUrlChange() {
             last_url = current_url;
             runObserverIfValidUrl();
         }
-    }, 1000);
+    }, 5000);
 }
 
 // Driver
