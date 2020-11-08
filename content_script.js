@@ -70,7 +70,7 @@ function checkURLChanges() {
         let current_url = window.location.href;
         if (last_url !== current_url) {
             last_url = current_url;
-            runIfValidUrl2();
+            runIfValidUrl();
         }
     }, 1000);
 }
